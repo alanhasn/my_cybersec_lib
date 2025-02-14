@@ -23,7 +23,6 @@ print(result)
 
 """
 
-
 import platform
 import subprocess
 import nmap

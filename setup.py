@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="Security",
-    version="1.0",
-    author="Whoami",
+    name="SecureTool",
+    version="1.1",
+    author="WhoamiAlan",
     author_email="whoamialan11@gmail.com",
     description="A simple cybersecurity scanning library for scan the individual target and Networks easily...",
     long_description=open("README.md").read(),
