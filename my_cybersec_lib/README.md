@@ -1,4 +1,5 @@
 # SecureTool Library
+[![PyPI Downloads](https://static.pepy.tech/badge/securetool)](https://pepy.tech/projects/securetool)
 
 SecureTool is a comprehensive cybersecurity utility library designed to simplify security tasks such as network scanning, web scraping, and password strength checking. With SecureTool, you get powerful, easy-to-use tools for vulnerability discovery and data extraction.
 
