@@ -1,7 +1,7 @@
 r"""
 # SecureTool Library
 
-SecureTool is a comprehensive cybersecurity utility library designed to simplify security tasks such as network scanning, web scraping, and password strength checking. With SecureTool, you get powerful, easy-to-use tools for vulnerability discovery and data extraction.
+SecureTool is a comprehensive cybersecurity utility library designed to simplify security tasks such as network scanning, web scraping, password strength checking, encryption, and validation. With SecureTool, you get powerful, easy-to-use tools for vulnerability discovery and data extraction.
 
 ## Features
 
@@ -12,6 +12,8 @@ SecureTool is a comprehensive cybersecurity utility library designed to simplify
   - `regular` — scans ports 1-1024
   - `quick` — scans 100 common ports quickly
   - `deep` — scans 1000 ports with OS and version detection
+  - `stealth` — stealth SYN scan to avoid detection
+  - `vulnerability` — scan for common vulnerabilities
   - `deep scan plus udp` — scans both TCP and UDP ports
   - `deep_scan_plusAll_TCP_ports` — scans all 65535 TCP ports
 - Retrieves information such as open/closed ports, OS detection, and response times.
@@ -22,13 +24,33 @@ SecureTool is a comprehensive cybersecurity utility library designed to simplify
 - Checks password complexity based on length, digits, letters, special characters, uppercase and lowercase letters.
 - Provides clear feedback on missing criteria for improving password strength.
 - Classifies passwords into **Strong**, **Moderate**, or **Weak** categories based on comprehensive checks.
+- Generate secure random passwords and passphrases.
+- Calculate password entropy.
+- Hash passwords using various algorithms.
 
 ### Web Scraper
 
-- Extract links, forms, and external JavaScript files from any given webpage.
+- Extract links, forms, and external JavaScript/CSS files from any given webpage.
 - Save webpage content as pretty HTML or structured JSON data.
 - Search for specific keywords within webpage content and return matching sentences.
+- Check security headers (HSTS, CSP, X-Frame-Options, etc.).
+- Extract metadata (Open Graph, Twitter Cards).
+- Check SSL/TLS certificate information.
+- Scan for exposed sensitive data (emails, API keys, etc.).
 - Robust error handling for HTTP and parsing issues.
+
+### Encryption
+
+- Encrypt and decrypt data using Fernet symmetric encryption.
+- Generate encryption keys.
+- Hash data using various algorithms (MD5, SHA1, SHA256, SHA512, BLAKE2b).
+- Generate keys from passwords using PBKDF2.
+
+### Validation
+
+- Validate email addresses, URLs, IP addresses, and ports.
+- Sanitize user input to prevent injection attacks.
+- Validate network ranges (CIDR notation).
 
 ## Installation
 
@@ -56,35 +78,71 @@ brew install nmap       # macOS (Homebrew)
 ### Scanner
 
 ```python
-from SecureTool.Scanner import Scanner
+from SecureTool import Scanner
 
 scanner = Scanner()
-result = scanner.RegularScan("192.168.1.1")
+result = scanner.regular_scan("192.168.1.1")
 print(result)
+
+# Vulnerability scan
+vuln_result = scanner.vulnerability_scan("192.168.1.1")
+print(vuln_result)
 ```
 
 ### Password Strength Checker
 
 ```python
-from SecureTool.PasswordChecker import PasswordStrengthChecker
+from SecureTool import PasswordStrengthChecker
 
 checker = PasswordStrengthChecker()
-strength, feedback = checker.check_strength("YourPassword123!")
-print(strength)
-print("Suggestions:", feedback)
+result = checker.check_strength("YourPassword123!")
+print(result)
+
+# Generate secure password
+password = checker.generate_password(length=20)
+print(f"Generated password: {password}")
 ```
 
 ### Web Scraper
 
 ```python
-from SecureTool.Scraper import Scraper
+from SecureTool import Scraper
 
 scraper = Scraper()
 links = scraper.extract_links("https://example.com")
 print(links)
 
-json_result = scraper.save_as_json("https://example.com", "page_data.json")
-print(json_result)
+# Check security headers
+headers = scraper.check_security_headers("https://example.com")
+print(headers)
+```
+
+### Encryption
+
+```python
+from SecureTool import Encryption
+
+# Encrypt data
+result = Encryption.encrypt_data("Sensitive data")
+print(result)
+
+# Decrypt data
+decrypted = Encryption.decrypt_data(result["encrypted_data"], result["key"])
+print(decrypted)
+```
+
+### Validation
+
+```python
+from SecureTool import Validation
+
+# Validate email
+email_result = Validation.validate_email("user@example.com")
+print(email_result)
+
+# Validate URL
+url_result = Validation.validate_url("https://example.com")
+print(url_result)
 ```
 
 ## Contributing
@@ -103,10 +161,20 @@ For questions, support, or feedback:
 🔗 GitHub Repository
 
 If you want a professional, reliable security toolset — SecureTool is ready to empower your cybersecurity projects. Download and get started today! 🚀
-
-```
-
-```
-
-
 """
+
+from .Scanning import Scanner
+from .Password import PasswordStrengthChecker
+from .Scraping import Scraper
+from .Encryption import Encryption
+from .Validation import Validation
+
+__all__ = [
+    "Scanner",
+    "PasswordStrengthChecker",
+    "Scraper",
+    "Encryption",
+    "Validation"
+]
+
+__version__ = "2.1.0"
