@@ -19,6 +19,7 @@ def run_command(cmd, check=True):
     print(f"Running: {' '.join(cmd)}")
     result = subprocess.run(cmd, check=check)
     return result
+    //V
 
 def main():
     # Change to package directory
